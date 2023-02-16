@@ -2,5 +2,12 @@
     "@@locale": "en",
     "noRoutesForLocation": "No router for location: {path}",
     "unknownPath": "Unknown path",
-    "login": "Login"
+    "login": "Login",
+    "email": "Email",
+    "usergmail": "User@gmail.com",
+    "password": "Password",
+    "youHaveToCompleteThisField": "You have to complete this field",
+    "invalidMail": "Invalid mail",
+    "invalidPassword": "Invalid password",
+    "enter":"Enter"
 }

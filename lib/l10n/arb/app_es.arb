@@ -2,5 +2,12 @@
     "@@locale": "es",
     "noRoutesForLocation": "No existe la ruta: {path}",
     "unknownPath": "Ruta desconocida",
-    "login": "Iniciar Sesión"
+    "login": "Iniciar Sesión",
+    "email": "Correo",
+    "usergmail": "Usuario@gmail.com",
+    "password": "Contraseña",
+    "youHaveToCompleteThisField": "Tienes que completar este campo",
+     "invalidMail": "Mail invalido",
+     "invalidPassword": "Contraseña invalida",
+     "enter":"Ingresar"
 }
