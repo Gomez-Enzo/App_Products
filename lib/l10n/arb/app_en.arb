@@ -9,5 +9,6 @@
     "youHaveToCompleteThisField": "You have to complete this field",
     "invalidMail": "Invalid mail",
     "invalidPassword": "Invalid password",
-    "enter":"Enter"
+    "enter":"Enter",
+    "products": "Products"
 }

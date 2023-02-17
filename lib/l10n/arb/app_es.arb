@@ -9,5 +9,6 @@
     "youHaveToCompleteThisField": "Tienes que completar este campo",
      "invalidMail": "Mail invalido",
      "invalidPassword": "Contraseña invalida",
-     "enter":"Ingresar"
+     "enter":"Ingresar",
+     "products": "Productos"
 }

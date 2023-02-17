@@ -33,7 +33,7 @@ class ViewLogin extends StatefulWidget {
 class _ViewLoginState extends State<ViewLogin> {
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.isSuccess) {
@@ -80,7 +80,7 @@ class _ViewLoginState extends State<ViewLogin> {
                             ),
                           ),
                           Form(
-                            key: _formKey,
+                            key: formKey,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             child: Column(
@@ -128,7 +128,7 @@ class _ViewLoginState extends State<ViewLogin> {
                                   onPressed: () {
                                     context
                                         .read<LoginCubit>()
-                                        .validForm(_formKey);
+                                        .validForm(formKey);
                                   },
                                 )
                               ],

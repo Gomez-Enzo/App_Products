@@ -44,6 +44,14 @@ class _ViewAppState extends State<ViewApp> {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.grey[300],
+        appBarTheme: AppBarTheme(
+          elevation: 5.sp,
+          color: Colors.indigo,
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Colors.indigo,
+          elevation: 5.sp,
+        ),
       ),
       builder: (context, child) => AppSize.child(
         child: child!,
@@ -54,7 +62,7 @@ class _ViewAppState extends State<ViewApp> {
   GoRouter router() {
     return GoRouter(
       errorBuilder: (context, state) => RoutingErrorPage(state.path),
-      initialLocation: '/login',
+      initialLocation: '/home',
       routes: <GoRoute>[
         GoRoute(
           path: '/login',
