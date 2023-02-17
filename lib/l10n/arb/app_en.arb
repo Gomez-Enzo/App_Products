@@ -10,5 +10,9 @@
     "invalidMail": "Invalid mail",
     "invalidPassword": "Invalid password",
     "enter":"Enter",
-    "products": "Products"
+    "products": "Products",
+    "productName": "Product name",
+    "name": "Name:",
+    "price": "Price:",
+    "available": "Available"
 }

@@ -1,6 +1,7 @@
 import 'package:app_products/home/views/home_page.dart';
 import 'package:app_products/l10n/l10n.dart';
 import 'package:app_products/login/views/login_page.dart';
+import 'package:app_products/products/views/create_products_page.dart';
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -45,12 +46,12 @@ class _ViewAppState extends State<ViewApp> {
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.grey[300],
         appBarTheme: AppBarTheme(
-          elevation: 5.sp,
+          elevation: 5,
           color: Colors.indigo,
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.indigo,
-          elevation: 5.sp,
+          elevation: 5,
         ),
       ),
       builder: (context, child) => AppSize.child(
@@ -62,7 +63,7 @@ class _ViewAppState extends State<ViewApp> {
   GoRouter router() {
     return GoRouter(
       errorBuilder: (context, state) => RoutingErrorPage(state.path),
-      initialLocation: '/home',
+      initialLocation: '/products',
       routes: <GoRoute>[
         GoRoute(
           path: '/login',
@@ -73,6 +74,11 @@ class _ViewAppState extends State<ViewApp> {
           path: '/home',
           name: HomePage.name,
           builder: (context, state) => const HomePage(),
+        ),
+        GoRoute(
+          path: '/products',
+          name: CreateProductsPage.name,
+          builder: (context, state) => const CreateProductsPage(),
         )
       ],
     );

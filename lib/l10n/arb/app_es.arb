@@ -10,5 +10,9 @@
      "invalidMail": "Mail invalido",
      "invalidPassword": "Contraseña invalida",
      "enter":"Ingresar",
-     "products": "Productos"
+     "products": "Productos",
+     "productName": "Nombre del producto",
+     "name": "Nombre:",
+     "price": "Precio:",
+     "available": "Disponible"
 }
