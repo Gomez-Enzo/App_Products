@@ -18,6 +18,8 @@ dependencies:
     sdk: flutter
   go_router: ^6.0.6
   intl: ^0.17.0
+  products_client:
+    path: packages/products_client
   products_ui:
     path: packages/products_ui
   very_good_cli: ^0.11.0+1

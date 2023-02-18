@@ -4,15 +4,23 @@ import 'package:app_products/login/views/login_page.dart';
 import 'package:app_products/products/views/create_products_page.dart';
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:products_client/products_client.dart';
 
-class App extends StatelessWidget {
-  const App({super.key});
+class PageApp extends StatelessWidget {
+  const PageApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const ViewApp();
+    final productsClient = ProductsClient();
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: productsClient),
+      ],
+      child: const ViewApp(),
+    );
   }
 }
 
@@ -63,7 +71,7 @@ class _ViewAppState extends State<ViewApp> {
   GoRouter router() {
     return GoRouter(
       errorBuilder: (context, state) => RoutingErrorPage(state.path),
-      initialLocation: '/products',
+      initialLocation: '/home',
       routes: <GoRoute>[
         GoRoute(
           path: '/login',

@@ -1,8 +1,16 @@
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
+import 'package:products_client/products_client.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  const ProductCard({
+    required this.product,
+    required this.index,
+    super.key,
+  });
+
+  final Product product;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +36,11 @@ class ProductCard extends StatelessWidget {
           children: [
             const _BackgroundImage(),
             const _ProductDetails(),
-            const Positioned(
+            Positioned(
               top: 0,
               right: 0,
               child: _Tags(
-                text: r'$103.99',
+                text: product.price.toString(),
               ),
             ),
             Positioned(
