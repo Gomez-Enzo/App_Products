@@ -86,7 +86,15 @@ class _ViewAppState extends State<ViewApp> {
         GoRoute(
           path: '/products',
           name: CreateProductsPage.name,
-          builder: (context, state) => const CreateProductsPage(),
+          builder: (context, state) {
+            final product = (state.extra as Map?)?['product'] as Product?;
+            if (product != null) {
+              return CreateProductsPage(
+                product: product,
+              );
+            }
+            return Text('error');
+          },
         )
       ],
     );

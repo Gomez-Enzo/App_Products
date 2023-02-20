@@ -4,12 +4,18 @@ import 'package:app_products/products/widgets/product_image.dart';
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:products_client/products_client.dart';
 import 'package:products_ui/products_ui.dart';
 
 class CreateProductsPage extends StatelessWidget {
-  const CreateProductsPage({super.key});
+  const CreateProductsPage({
+    super.key,
+    this.product,
+  });
 
   static const name = 'products';
+
+  final Product? product;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,9 @@ class CreateProductsPage extends StatelessWidget {
           children: [
             Stack(
               children: [
-                const ProductImage(),
+                ProductImage(
+                  url: product!.picture,
+                ),
                 Positioned(
                   top: 60.sp,
                   left: 20.sp,

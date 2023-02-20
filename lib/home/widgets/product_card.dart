@@ -34,8 +34,11 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
-            const _BackgroundImage(),
-            const _ProductDetails(),
+            _BackgroundImage(product.picture),
+            _ProductDetails(
+              name: product.name,
+              id: product.id,
+            ),
             Positioned(
               top: 0,
               right: 0,
@@ -43,18 +46,18 @@ class ProductCard extends StatelessWidget {
                 text: product.price.toString(),
               ),
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              child: _Tags(
-                text: 'No disponible',
-                color: Colors.yellow[800],
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25.sp),
-                  bottomRight: Radius.circular(25.sp),
+            if (!product.available)
+              Positioned(
+                top: 0,
+                left: 0,
+                child: _Tags(
+                  color: Colors.yellow[800],
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25.sp),
+                    bottomRight: Radius.circular(25.sp),
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
@@ -63,7 +66,9 @@ class ProductCard extends StatelessWidget {
 }
 
 class _BackgroundImage extends StatelessWidget {
-  const _BackgroundImage();
+  const _BackgroundImage(this.url);
+
+  final String? url;
 
   @override
   Widget build(BuildContext context) {
@@ -72,18 +77,29 @@ class _BackgroundImage extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: 400.sp,
-        child: const FadeInImage(
-          placeholder: AssetImage('assets/img/jar-loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/400x300/f6f6f6'),
-          fit: BoxFit.cover,
-        ),
+        child: url != null
+            ? FadeInImage(
+                placeholder: const AssetImage('assets/img/jar-loading.gif'),
+                image: NetworkImage(url!),
+                fit: BoxFit.contain,
+              )
+            : const Image(
+                image: AssetImage('assets/img/no-image.png'),
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }
 }
 
 class _ProductDetails extends StatelessWidget {
-  const _ProductDetails();
+  const _ProductDetails({
+    required this.name,
+    this.id,
+  });
+
+  final String name;
+  final String? id;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +121,7 @@ class _ProductDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Disco duro G',
+            name,
             style: TextStyle(
               color: Colors.white,
               fontSize: 20.sp,
@@ -115,7 +131,7 @@ class _ProductDetails extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            'Id del disco duro',
+            id ?? '',
             style: TextStyle(
               color: Colors.white,
               fontSize: 15.sp,
@@ -131,11 +147,11 @@ class _Tags extends StatelessWidget {
   const _Tags({
     this.borderRadius,
     this.color,
-    this.text = 'text',
+    this.text,
   });
 
   final Color? color;
-  final String text;
+  final String? text;
   final BorderRadiusGeometry? borderRadius;
 
   @override
@@ -156,7 +172,7 @@ class _Tags extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.sp),
           child: Text(
-            text,
+            text == null ? 'No disponible' : '\$$text',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20.sp,

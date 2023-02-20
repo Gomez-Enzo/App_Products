@@ -21,6 +21,7 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     List<Product>? products,
+    Product? selectedProduct,
     HomeStatus? status,
   }) {
     return HomeState(

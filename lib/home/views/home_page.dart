@@ -51,18 +51,25 @@ class _HomeViewState extends State<HomeView> {
         builder: (context, state) {
           if (state.isSuccess) {
             return ListView.builder(
+              physics: const BouncingScrollPhysics(),
               itemCount: state.products.length,
               itemBuilder: (BuildContext context, int index) => GestureDetector(
-                onTap: () => context.pushNamed(CreateProductsPage.name),
+                onTap: () {
+                  final product = state.products[index];
+                  context.pushNamed(
+                    CreateProductsPage.name,
+                    extra: <String, Product?>{
+                      'product': product,
+                    },
+                  );
+                },
                 child: ProductCard(
-                  product: state.products[0],
+                  product: state.products[index],
                   index: index,
                 ),
               ),
             );
-          } else if (state.isFailure) {
-            //error
-          }
+          } else if (state.isFailure) {}
           return const Center(
             child: CircularProgressIndicator(
               color: Colors.indigo,

@@ -16,11 +16,10 @@ class ProductsClient {
   /// A method to make the request to the Database.
   Future<List<Product>?> getProducts() async {
     try {
-      final url = Uri.https(_authority, '.json');
+      final url = Uri.https(_authority, 'products.json');
       final resp = await _client.get(url);
       final body = (jsonDecode(resp.body) as Map<dynamic, dynamic>)
           .cast<String, dynamic>();
-      print(body);
       return body
           .map((key, value) {
             final temProduct = Product.fromMap(
