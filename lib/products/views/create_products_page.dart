@@ -1,8 +1,11 @@
 import 'package:app_products/home/views/home_page.dart';
 import 'package:app_products/l10n/l10n.dart';
+import 'package:app_products/products/cubit/product_cubit.dart';
 import 'package:app_products/products/widgets/product_image.dart';
+import 'package:app_products/utils/validators.dart';
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:products_client/products_client.dart';
 import 'package:products_ui/products_ui.dart';
@@ -19,6 +22,60 @@ class CreateProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => ProductCubit(
+            productClient: context.read<ProductsClient>(),
+            product: product,
+          ),
+        ),
+      ],
+      child: CreateProductView(
+        product: product,
+      ),
+    );
+  }
+}
+
+class CreateProductView extends StatefulWidget {
+  const CreateProductView({
+    required this.product,
+    super.key,
+  });
+
+  final Product? product;
+
+  @override
+  State<CreateProductView> createState() => _CreateProductViewState();
+}
+
+class _CreateProductViewState extends State<CreateProductView> {
+  late bool _isAvailable = widget.product?.available ?? false;
+  late final TextEditingController _productName;
+  late final TextEditingController _productPicture;
+  late final TextEditingController _productPrice;
+
+  @override
+  void initState() {
+    super.initState();
+    _productName = TextEditingController(text: widget.product?.name);
+    _productPicture = TextEditingController(text: widget.product?.picture);
+    _productPrice = TextEditingController(
+      text: widget.product?.price.toString(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _productName.dispose();
+    _productPicture.dispose();
+    _productPrice.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -26,7 +83,7 @@ class CreateProductsPage extends StatelessWidget {
             Stack(
               children: [
                 ProductImage(
-                  url: product!.picture,
+                  url: _productPicture.text,
                 ),
                 Positioned(
                   top: 60.sp,
@@ -83,6 +140,8 @@ class CreateProductsPage extends StatelessWidget {
                       ),
                       ProductsTextFormField(
                         handlePassword: false,
+                        controller: _productName,
+                        validator: (value) => validateName(value, context),
                         hintText: context.l10n.productName,
                         labelText: context.l10n.name,
                       ),
@@ -91,6 +150,7 @@ class CreateProductsPage extends StatelessWidget {
                       ),
                       ProductsTextFormField(
                         keyboardType: TextInputType.number,
+                        controller: _productPrice,
                         handlePassword: false,
                         hintText: r'$150',
                         labelText: context.l10n.price,
@@ -99,10 +159,14 @@ class CreateProductsPage extends StatelessWidget {
                         height: 10.sp,
                       ),
                       SwitchListTile.adaptive(
-                        value: true,
+                        value: _isAvailable,
                         title: Text(context.l10n.available),
                         activeColor: Colors.indigo,
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          setState(() {
+                            _isAvailable = value;
+                          });
+                        },
                       ),
                       SizedBox(
                         height: 10.sp,
@@ -119,9 +183,18 @@ class CreateProductsPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          final product = Product(
+            id: widget.product?.id,
+            picture: _productPicture.text,
+            available: _isAvailable,
+            name: _productName.text,
+            price: double.parse(_productPrice.text),
+          );
+        },
         child: const Icon(Icons.save_outlined),
       ),
     );
+    ;
   }
 }

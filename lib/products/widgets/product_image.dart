@@ -38,14 +38,14 @@ class ProductImage extends StatelessWidget {
             topLeft: Radius.circular(45.sp),
             topRight: Radius.circular(45.sp),
           ),
-          child: url != null
-              ? FadeInImage(
-                  placeholder: const AssetImage('assets/img/jar-loading.gif'),
-                  image: NetworkImage(url!),
+          child: (url == null || url == '')
+              ? const Image(
+                  image: AssetImage('assets/img/no-image.png'),
                   fit: BoxFit.cover,
                 )
-              : const Image(
-                  image: AssetImage('assets/img/no-image.png'),
+              : FadeInImage(
+                  placeholder: const AssetImage('assets/img/jar-loading.gif'),
+                  image: NetworkImage(url!),
                   fit: BoxFit.cover,
                 ),
         ),

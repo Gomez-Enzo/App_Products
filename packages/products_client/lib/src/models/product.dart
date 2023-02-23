@@ -34,13 +34,6 @@ class Product {
         'price': price,
       };
 
-  Product copy() => Product(
-        available: available,
-        name: name,
-        price: price,
-        id: id,
-      );
-
   /// the availability of the product
   final bool available;
 

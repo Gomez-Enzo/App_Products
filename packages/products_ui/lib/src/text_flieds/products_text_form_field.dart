@@ -13,10 +13,16 @@ class ProductsTextFormField extends StatefulWidget {
     this.labelText,
     this.keyboardType,
     this.validator,
+    this.initialValue,
+    this.onChanged,
+    this.controller,
   });
 
   /// Whether the text field will manage sensitive information.
   final bool handlePassword;
+
+  /// The inital Value to display.
+  final String? initialValue;
 
   /// The hint text to display.
   final String? hintText;
@@ -29,6 +35,12 @@ class ProductsTextFormField extends StatefulWidget {
 
   /// The validator of the text field.
   final String? Function(String? text)? validator;
+
+  /// the onChanged for the text field.
+  final void Function(String)? onChanged;
+
+  /// the controller for the text field.
+  final TextEditingController? controller;
 
   @override
   State<ProductsTextFormField> createState() => _ProductsTextFormFieldState();
@@ -48,7 +60,10 @@ class _ProductsTextFormFieldState extends State<ProductsTextFormField> {
       autocorrect: false,
       keyboardType: widget.keyboardType,
       validator: widget.validator,
+      initialValue: widget.initialValue,
+      onChanged: widget.onChanged,
       obscureText: _obscureText,
+      controller: widget.controller,
       decoration: InputDecoration(
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(

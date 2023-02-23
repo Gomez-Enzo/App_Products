@@ -26,3 +26,11 @@ String? validatePassword(String? value, BuildContext context) {
   }
   return null;
 }
+
+/// Provides name lenght validation
+String? validateName(String? value, BuildContext context) {
+  if (value == null || value.isEmpty) {
+    return context.l10n.theNameIsRequired;
+  }
+  return null;
+}

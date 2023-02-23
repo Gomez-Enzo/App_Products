@@ -88,12 +88,10 @@ class _ViewAppState extends State<ViewApp> {
           name: CreateProductsPage.name,
           builder: (context, state) {
             final product = (state.extra as Map?)?['product'] as Product?;
-            if (product != null) {
-              return CreateProductsPage(
-                product: product,
-              );
-            }
-            return Text('error');
+
+            return CreateProductsPage(
+              product: product,
+            );
           },
         )
       ],

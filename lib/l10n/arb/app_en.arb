@@ -14,5 +14,6 @@
     "productName": "Product name",
     "name": "Name:",
     "price": "Price:",
-    "available": "Available"
+    "available": "Available",
+    "theNameIsRequired": "The name is required"
 }
