@@ -6,7 +6,7 @@ import 'package:app_products/utils/validators.dart';
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:go_router_flow/go_router_flow.dart';
 import 'package:products_client/products_client.dart';
 import 'package:products_ui/products_ui.dart';
 
@@ -27,7 +27,6 @@ class CreateProductsPage extends StatelessWidget {
         BlocProvider(
           create: (_) => ProductCubit(
             productClient: context.read<ProductsClient>(),
-            product: product,
           ),
         ),
       ],
@@ -76,125 +75,144 @@ class _CreateProductViewState extends State<CreateProductView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
+    final _formKey = GlobalKey<FormState>();
+    return BlocConsumer<ProductCubit, ProductState>(
+      listener: (context, state) {
+        if (state.isSuccess) {
+          context.pop(true);
+        }
+        if (state.isFailure) {
+          print('Error');
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
               children: [
-                ProductImage(
-                  url: _productPicture.text,
-                ),
-                Positioned(
-                  top: 60.sp,
-                  left: 20.sp,
-                  child: IconButton(
-                    onPressed: () => context.goNamed(HomePage.name),
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 40.sp,
+                Stack(
+                  children: [
+                    ProductImage(
+                      url: _productPicture.text,
                     ),
-                  ),
-                ),
-                Positioned(
-                  top: 60.sp,
-                  right: 20.sp,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.camera_alt_outlined,
-                      color: Colors.white,
-                      size: 40.sp,
+                    Positioned(
+                      top: 60.sp,
+                      left: 20.sp,
+                      child: IconButton(
+                        onPressed: () => context.goNamed(HomePage.name),
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: 40.sp,
+                        ),
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 10.sp,
-              ),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.sp),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(25.sp),
-                    bottomLeft: Radius.circular(25.sp),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: Offset(0, 5.sp),
-                    ),
+                    Positioned(
+                      top: 60.sp,
+                      right: 20.sp,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.camera_alt_outlined,
+                          color: Colors.white,
+                          size: 40.sp,
+                        ),
+                      ),
+                    )
                   ],
                 ),
-                child: Form(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 10.sp,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.sp,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.sp),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(25.sp),
+                        bottomLeft: Radius.circular(25.sp),
                       ),
-                      ProductsTextFormField(
-                        handlePassword: false,
-                        controller: _productName,
-                        validator: (value) => validateName(value, context),
-                        hintText: context.l10n.productName,
-                        labelText: context.l10n.name,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: Offset(0, 5.sp),
+                        ),
+                      ],
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                          ProductsTextFormField(
+                            handlePassword: false,
+                            controller: _productName,
+                            validator: (value) => validateName(value, context),
+                            hintText: context.l10n.productName,
+                            labelText: context.l10n.name,
+                          ),
+                          SizedBox(
+                            height: 17.sp,
+                          ),
+                          ProductsTextFormField(
+                            keyboardType: TextInputType.number,
+                            controller: _productPrice,
+                            validator: (value) => validatePrice(value, context),
+                            handlePassword: false,
+                            hintText: r'$150',
+                            labelText: context.l10n.price,
+                          ),
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                          SwitchListTile.adaptive(
+                            value: _isAvailable,
+                            title: Text(context.l10n.available),
+                            activeColor: Colors.indigo,
+                            onChanged: (value) {
+                              setState(() {
+                                _isAvailable = value;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 17.sp,
-                      ),
-                      ProductsTextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: _productPrice,
-                        handlePassword: false,
-                        hintText: r'$150',
-                        labelText: context.l10n.price,
-                      ),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                      SwitchListTile.adaptive(
-                        value: _isAvailable,
-                        title: Text(context.l10n.available),
-                        activeColor: Colors.indigo,
-                        onChanged: (value) {
-                          setState(() {
-                            _isAvailable = value;
-                          });
-                        },
-                      ),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+                SizedBox(
+                  height: 100.sp,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 100.sp,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final product = Product(
-            id: widget.product?.id,
-            picture: _productPicture.text,
-            available: _isAvailable,
-            name: _productName.text,
-            price: double.parse(_productPrice.text),
-          );
-        },
-        child: const Icon(Icons.save_outlined),
-      ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              final validForm = _formKey.currentState?.validate() ?? false;
+              if (validForm) {
+                final product = Product(
+                  id: widget.product?.id,
+                  picture: _productPicture.text,
+                  available: _isAvailable,
+                  name: _productName.text,
+                  price: double.parse(_productPrice.text),
+                );
+                context.read<ProductCubit>().saveOrCreateProduct(product);
+              }
+            },
+            child: const Icon(Icons.save_outlined),
+          ),
+        );
+      },
     );
-    ;
   }
 }

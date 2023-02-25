@@ -6,7 +6,7 @@ import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
+import 'package:go_router_flow/go_router_flow.dart';
 import 'package:products_client/products_client.dart';
 
 class PageApp extends StatelessWidget {

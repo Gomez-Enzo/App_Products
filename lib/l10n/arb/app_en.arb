@@ -15,5 +15,7 @@
     "name": "Name:",
     "price": "Price:",
     "available": "Available",
-    "theNameIsRequired": "The name is required"
+    "theNameIsRequired": "The name is required",
+    "invalidPrice" : "Invalid Price"
+    
 }

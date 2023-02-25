@@ -213,14 +213,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  go_router:
+  go_router_flow:
     dependency: "direct main"
     description:
-      name: go_router
-      sha256: "5a0b2e0bc88a006c09d2b419004ffabecf83a74520b8852ea148f22e82634c27"
+      name: go_router_flow
+      sha256: cfee88017d6ef890bb18f479a3c30505280a4b6afd399ca9f5885d9875a11676
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.6"
+    version: "6.0.0+3"
   http:
     dependency: transitive
     description:

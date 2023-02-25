@@ -15,5 +15,7 @@
      "name": "Nombre:",
      "price": "Precio:",
      "available": "Disponible",
-     "theNameIsRequired": "El nombre es obligatorio"
+     "theNameIsRequired": "El nombre es obligatorio",
+     "invalidPrice" : "Precio invalido"
+     
 }

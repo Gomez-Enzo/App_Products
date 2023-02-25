@@ -33,4 +33,26 @@ class ProductsClient {
       return null;
     }
   }
+
+  /// A method for updating the database product.
+  Future<String?> updateProduct(Product product) async {
+    try {
+      final url = Uri.https(_authority, 'products/${product.id}.json');
+      await _client.put(url, body: product.toJson());
+      return product.id;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<String?> createProduct(Product product) async {
+    try {
+      final url = Uri.https(_authority, 'products.json');
+      final resp = await _client.post(url, body: product.toJson());
+      final body = (json.decode(resp.body) as Map).cast<String, dynamic>();
+      return product.id = body['name'].toString();
+    } catch (e) {
+      return null;
+    }
+  }
 }

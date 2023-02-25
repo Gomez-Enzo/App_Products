@@ -8,11 +8,9 @@ enum ProductStatus {
 
 class ProductState extends Equatable {
   const ProductState({
-    this.product,
     this.status = ProductStatus.loading,
   });
 
-  final Product? product;
   final ProductStatus status;
 
   bool get isLoading => status == ProductStatus.loading;
@@ -24,14 +22,12 @@ class ProductState extends Equatable {
     ProductStatus? status,
   }) {
     return ProductState(
-      product: product ?? this.product,
       status: status ?? this.status,
     );
   }
 
   @override
   List<Object?> get props => [
-        product,
         status,
       ];
 }

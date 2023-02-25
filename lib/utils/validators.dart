@@ -34,3 +34,16 @@ String? validateName(String? value, BuildContext context) {
   }
   return null;
 }
+
+/// Provides price validation
+String? validatePrice(String? value, BuildContext context) {
+  const pattern = r'^(\d+)?\.?\d{0,2}';
+  final regExp = RegExp(pattern);
+  if (value == null || value.isEmpty) {
+    return context.l10n.youHaveToCompleteThisField;
+  }
+  if (!regExp.hasMatch(value)) {
+    return context.l10n.invalidPrice;
+  }
+  return null;
+}

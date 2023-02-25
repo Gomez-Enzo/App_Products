@@ -6,7 +6,7 @@ import 'package:app_products/utils/validators.dart';
 import 'package:appsize/appsize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:go_router_flow/go_router_flow.dart';
 import 'package:products_ui/products_ui.dart';
 
 class LoginPage extends StatelessWidget {

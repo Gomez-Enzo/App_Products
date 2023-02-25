@@ -4,7 +4,7 @@ import 'package:app_products/l10n/l10n.dart';
 import 'package:app_products/products/views/create_products_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:go_router_flow/go_router_flow.dart';
 import 'package:products_client/products_client.dart';
 
 class HomePage extends StatelessWidget {
@@ -54,14 +54,19 @@ class _HomeViewState extends State<HomeView> {
               physics: const BouncingScrollPhysics(),
               itemCount: state.products.length,
               itemBuilder: (BuildContext context, int index) => GestureDetector(
-                onTap: () {
+                onTap: () async {
                   final product = state.products[index];
-                  context.pushNamed(
+                  final result = await context.pushNamed<bool?>(
                     CreateProductsPage.name,
                     extra: <String, Product?>{
                       'product': product,
                     },
                   );
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (result ?? false) {
+                      context.read<HomeCubit>().getProducts();
+                    }
+                  });
                 },
                 child: ProductCard(
                   product: state.products[index],
@@ -69,7 +74,9 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             );
-          } else if (state.isFailure) {}
+          } else if (state.isFailure) {
+            print('Error');
+          }
           return const Center(
             child: CircularProgressIndicator(
               color: Colors.indigo,
@@ -79,7 +86,9 @@ class _HomeViewState extends State<HomeView> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          context.pushNamed(CreateProductsPage.name);
+        },
       ),
     );
   }
