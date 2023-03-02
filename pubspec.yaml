@@ -22,7 +22,7 @@ dependencies:
     path: packages/products_client
   products_ui:
     path: packages/products_ui
-  very_good_cli: ^0.11.0+1
+  very_good_cli: ^0.12.2
 
 dev_dependencies:
   bloc_test: ^9.1.1
